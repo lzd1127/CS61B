@@ -1,0 +1,1 @@
+depthFirstSearch() starts from the origin and checks if each cell can be connected to every other ones. After DFS finishes, check if the number of times each cell gets visited is equal to n(n-1). If not, maze is badly formed. To generate a random maze, randomize the sequence of unvisited vertices after visiting a vertex (aka pick an unvisited vertex surround the current one).

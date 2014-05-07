@@ -1,0 +1,184 @@
+                                     GRADER
+
+Name of student running submit: Yulin
+Login of student running submit:
+
+Second team member's name: Yu-Ting
+Second team member's login:
+
+Third team member's name (if any):
+Third team member's login:
+
+IMPORTANT:  Once you've submitted Project 2 once, the same team member should
+submit always.  If a different teammate must submit, inform cs61b@cory.eecs of
+all the details.  Include a complete list of team members, and let us know
+which submission you want graded.
+
+If you've submitted your project once, or even written a substantial amount of
+code together, you may not change partners without the permission of the
+instructor.
+===============================================================================
+Does your program compile without errors?
+Yes.
+
+
+Have you tested your program on the 61B lab machines?
+Yes.
+
+
+Did you successfully implement game tree search?  Did you successfully
+implement alpha-beta pruning?  Are there any limitations on it?  What is the
+default number of search levels set by the one-parameter MachinePlayer
+constructor (or is it a variable-depth search)?
+Yes. Yes. No. 6. 
+
+
+Describe your board evaluation function in some detail.
+If the machine player has a network, it returns the best score. 
+If the opponent has a network, it returns the worst score. 
+If neither player has a network, it returns the difference between 
+the machine player's number of connections and 
+the opponent's number of connections.
+
+
+Does your MachinePlayer use any special method of choosing the first few moves?
+Search depth of the first few moves is greater than the rest moves.
+
+
+Is there anything else the graders should know to help them read your project?
+Please read the comments before each function.
+
+
+
+Describe the classes, modules, and interfaces you designed before and while you
+implemented the project.  Your description should include:
+  -  A list of the classes your program uses.
+  -  A list of each of the "modules" used in or by MachinePlayer, similar to
+     the list in the "Teamwork" section of the README (but hopefully more
+     detailed).  (If you're using a list class, that should probably count as
+     a separate module.)
+  -  For each module, list the class(es) the module is implemented in.
+  -  For each module, say which of your team members implemented it.
+  -  For each module, describe its interface--specifically, the prototype and
+     behavior of each method that is available for external callers (outside
+     the module) to call.  Don't include methods that are only meant to be
+     called from within the module.
+
+     For each method, provide (1) a method prototype and (2) a complete,
+     unambiguous description of the behavior of the method/module.  This
+     description should also appear before the method in your code's comments.
+
+You will probably need to change some of your design decisions as you go; be sure to modify this file to reflect these changes before you submit your
+project. Your design of classes and interfaces will be worth 10% of your
+grade.
+
+
+List of classes:
+
+Class BestMove
+Class Board
+Class Location
+Class MachinePlayer
+Class Move
+Class Player
+
+
+List of modules:
+
+Module 1 (implemented by Yu-Ting):
+identifies a valid move.
+
+Module 2 (implemented by Yu-Ting):
+returns all valid moves.
+
+Module 3 (implemented by Yulin):
+identifies a valid network.
+
+Module 4 (implemented by Yulin):
+find all connections from a chip.
+
+Module 5 (implemented by Yulin):
+minimax method and alpha-beta pruning.
+
+Module 6 (implemented by Yulin):
+evaluation function
+
+
+Detailed list of implementation:
+
+Class BestMove:
+    protected int score; 
+    protected Move move;
+
+
+Class Location:
+    int x;
+    int y;
+
+
+Class Board:
+    private int[][] board;
+    final static int BLACK;
+    final static int WHITE;
+    final static int EMPTY;
+    final static int CORNER;
+    protected int numWhiteChips;
+    protected int numBlackChips;
+    final static Location[] WHITE_GOAL_AREA;
+    final static Location[] BLACK_GOAL_AREA;
+    final static Location[] CORNERS;
+
+      --private boolean isValidMove(Move m, int color)
+        - check if a move is valid
+
+      --protected DList findMoves(Move m, int color)
+        - return all valid moves for a player
+        - This method allows the minimax method in MachinePlayer to
+          search through all valid legal moves and choose the best one.
+
+      --protected Location[] findConnection(DList prev)
+        - return all valid positions of connections from a chip
+        - This method allows us to find complete networks.
+
+      --protected boolean hasNetwork(int color)
+        - check if a player has a valid network
+        - This method allows the eval method in MachinePlayer to 
+          score a board with a network.
+          Consequently, the minimax method in MachinePlayer will choose 
+          the move that will result in a network.
+
+
+Class MachinePlayer:
+    private int color;
+    private int searchDepth;
+    private Board board;
+    final static int MIN;
+    final static int MAX;
+    final static int ADD_MOVES_DEPTH;
+    final static int STEP_MOVES_DEPTH;
+
+      --private int eval()
+        - If machine player has a network, it returns the best score. 
+          If opponent has a network, it returns the worst score. 
+          If neither player has a network, it returns the difference 
+          between the machine player's number of connections and 
+          the opponent's number of connections.
+
+      --private BestMove minimax(int side, int alpha, int beta, int depth)
+        - If depth is greater than zero and no one has currently won, 
+          searches through list of all valid moves for a player 
+          for the best possible move and returns a BestMove which 
+          stores the best move and best score. 
+        - This method recursively calls itself after trying a move 
+          to a depth of int depth. 
+          If int depth is zero or a player has won, returns BestMove 
+          which has no moved stored and current board score. 
+          This method utilizes alpha-beta pruning so it won't have to 
+          search through all valid moves. It takes in int alpha and 
+          int beta to keep track of the current best score for 
+          "this" machine player and it's opponent.
+
+
+Package list:
+      Class DList
+      Class DListNode

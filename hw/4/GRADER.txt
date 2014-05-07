@@ -1,0 +1,9 @@
+Yulin Zheng
+cs61b-akm
+
+To corrupt DList, we can create another class, say Troubler, that imports DList.
+Inside Troubler, we can reset head and size to random things.
+
+DList bad = new DList();
+bad.head = null;
+bad.size = Integer.MIN_VALUE;

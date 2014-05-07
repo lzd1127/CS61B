@@ -1,0 +1,88 @@
+﻿WUGraph:
+
+
+private DList vertices;
+private HashTableChained vertexHash;
+private HashTableChained edgeHash;
+private int numVertices;
+private int numEdges;
+
+
+- vertexCount(): 
+  returns the number of vertices in the graph
+
+- edgeCount(): 
+  returns the total number of edges in the graph
+
+- getVertices(): 
+  returns an array containing all objects that serve as vertices of the graph. The array's length is exactly equal to the number of vertices. If the graph has no vertices, the array has length zero.
+
+- addVertex(Object vertex): 
+  adds a vertex (with no incident edges) to the graph. The vertex's "name" is the object provided as the parameter "vertex". If this object is already a vertex of the graph, graph is unchanged.
+
+- removeVertex(Object vertex): 
+  removes a vertex on the graph. All edges incident on the deleted vertex are removed as well. If the parameter "vertex" does not represent a vertex of the graph, the graph is unchanged.
+
+- isVertex(Object vertex): 
+  returns true if the parameter "vertex" of type <Object> represents a vertex of the graph.
+
+- degree(Object vertex): 
+  returns the degree of a vertex. Self-edges add only one to the degree of a vertex. If the parameter "vertex" doesn't represent a vertex of the graph, zero is returned.
+
+- getNeighbors(Object vertex): 
+  returns a <Neighbors> object referencing two arrays. 
+  The Neighbors.neighborList array contains each object that is connected to the input object by an edge. 
+  The Neighbors.weightList array contains the weights of the corresponding edges. 
+  The length of both arrays is equal to the number of edges incident on the input vertex. 
+  If the vertex has degree zero, or if the parameter "vertex" does not represent a vertex of the graph, null is returned (instead of a Neighbors object).
+
+- addEdge(Object u, Object v, int weight): 
+  adds an edge (u, v) to the graph. 
+  If either of the parameters u and v does not represent a vertex of the graph, the graph is unchanged. The edge is assigned a weight of "weight". 
+  If the graph already contains edge (u, v), the weight is updated to reflect the new value. Self-edges (where u == v) are allowed. 
+
+- removeEdge(Object u, Object v): 
+  removes an edge (u, v) from the graph. 
+  If either of the parameters u and v does not represent a vertex of the graph, the graph is unchanged.
+  If (u, v) is not an edge of the graph, the graph is unchanged.
+
+- isEdge(Object u, Object v): 
+  returns true if (u, v) is an edge of the graph. 
+  Returns false if (u, v) is not an edge (including the case where either of the parameters u and v does not represent a vertex of the graph).
+
+- weight(Object u, Object v): 
+  returns the weight of (u, v). 
+  Returns zero if (u, v) is not an edge (including the case where either of the parameters u and v does not represent a vertex of the graph).
+
+
+
+Kruskal:
+
+
+package graphalg:
+
+- class KEdge implements Comparable:
+
+  protected Object v1;
+  protected Object v2;
+  protected int w;
+
+  An extra KEdge class used solely for Kruskal, to distinguish from the Edge class used in part one.
+  Has an compareTo(Object o) method for sorting purpose.
+
+- class ListSorts:
+  Copied from HW8.
+  Has quickSort(LinkedQueue q) to sort the edges by weight.
+  Runs in O(|V| log|V|) time.
+
+- class Kruskal:
+  1. Create a new graph with no edges.
+  2. Make a LinkedQueue of all edges in G. Note that the edges being enqueued are of type KEdge. Runs in O(|V|) time.
+  3. Sort the LinkedQueue using quickSort(LinkedQueue q) in ListSort.
+  4. Create a new HashTable (note: different from the one in part one) to map vertices of G to unique ints.
+  Create a new DisjointSets to store KEdges of the new graph, add a KEdge, dequeued from the LinkedQueue, to the new graph when appropriate.
+
+
+package list:
+
+- containing DList for WUGraph and LinkedQueue for Kruskal.
